@@ -1,0 +1,16 @@
+body {
+	font-family: 'Open Sans';
+}
+
+.chat-body {
+	margin: 0 auto;
+	background-color: #ccc;
+	height: 600px;
+	width: 1200px;
+}
+
+.messages {
+	background-color: #eee;
+	height: 250px;
+	width: 250px;
+}

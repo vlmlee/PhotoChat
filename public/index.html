@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+	<head>
+	    <title>Photo Chat</title>
+	    <link rel="stylesheet" href="/stylesheets/style.css" />
+	</head>
+	<body>
+	    <h1>
+	    	Photo Chat
+		</h1>
+
+	    <section>
+	        <div class="chat-body">
+	            <div class="messages">
+	            </div>
+	        </div>
+	        <div class="inputMessage" placeholder="Enter your message">
+	        </div>
+	        <div class="login">
+	            <div class="form">
+	                <h3 class="title">Nickname: </h3>
+	                <input class="username" type="text" maxlength="14" />
+	            </div>
+	        </div>
+	    </section>
+
+	    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	    <script src='/socket.io/socket.io.js' type='text/javascript'></script>
+	    <script src="/javascripts/client.js"></script>
+	    <script src='/javascripts/ui.js' type='text/javascript'></script>
+	</body>
+</html>
