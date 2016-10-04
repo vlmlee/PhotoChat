@@ -11,9 +11,9 @@ var socketServer = require('./socketServer');
 var staticServer = {
     send404: function(response) {
         fs.readFile('./public/404.html', 'utf-8', (err, content) => {
-        	response.writeHead(404, { 'Content-Type': 'text/html' });
-        	response.write(content);
-        	response.end();
+            response.writeHead(404, { 'Content-Type': 'text/html' });
+            response.write(content);
+            response.end();
         });
     },
     sendFile: function(response, filePath, fileContents) {

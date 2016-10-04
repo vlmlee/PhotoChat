@@ -156,6 +156,11 @@ button:active {
     margin-bottom: 15px;
 }
 
+.picture {
+    width: 100%;
+    height: 100%;
+}
+
 .bubbleBottom-user {
     width: 40%;
     height: 60px;
@@ -176,6 +181,16 @@ button:active {
     clear: both;
 }
 
+.chatError {
+    position: absolute;
+    color: #f53d3d;
+    bottom: 120px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+    width: 400px;
+}
 
 /*
 *****************

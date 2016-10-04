@@ -7,7 +7,9 @@ exports.listen = function(server) {
     io = io.listen(server);
 
     io.on('connection', (socket) => {
-        socket.on('add user', (name) => {
+        socket.on('connect to chat', (name) => {
+            ++userCount;
+            users.push(name);
             socket.name = name;
             findAndJoinAvailableRoom(socket, name);
             io.to(socket.room).emit('user joined', {
@@ -17,10 +19,12 @@ exports.listen = function(server) {
         });
 
         socket.on('disconnect', () => {
+            --userCount;
             io.to(socket.room).emit('user left', {
                 name: socket.name,
             });
             removeParticipant(socket.name, socket.room);
+            users.splice(users.indexOf(socket.name), 1);
         });
 
         socket.on('retrieve stranger name', () => {
@@ -30,8 +34,11 @@ exports.listen = function(server) {
             });
         });
 
-        socket.on('new message', (stranger) => {
+        socket.on('send message', (stranger) => {
             socket.broadcast.to(socket.room).emit('stranger message', {
+                id: stranger.id,
+                type: stranger.type,
+                class: stranger.class,
                 message: stranger.message
             });
         });
