@@ -1,16 +1,416 @@
-body {
-	font-family: 'Open Sans';
+/*
+***********
+* GENERAL *
+***********
+*/
+
+* {
+    box-sizing: border-box;
 }
 
-.chat-body {
-	margin: 0 auto;
-	background-color: #ccc;
-	height: 600px;
-	width: 1200px;
+html {
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
 }
+
+html,
+input {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    list-style: none;
+    word-wrap: break-word;
+}
+
+input,
+input:active {
+    outline: none;
+}
+
+textarea:focus,
+input:focus,
+input:focus {
+    outline: none;
+}
+
+button:active {
+    outline: none;
+    border: none;
+}
+
+
+/*
+*********************
+* CHAT PAGE GENERIC *
+*********************
+*/
+
+.title {
+    font-family: 'Pacifico', cursive;
+    font-size: 40px;
+    padding-top: 30px;
+}
+
+.center {
+    text-align: center;
+}
+
+
+/* 
+*************
+* CHAT BODY *
+*************
+*/
+
+.chatBody {
+    height: 100%;
+    display: none;
+}
+
+.container-fluid {
+    margin-bottom: 0;
+    height: 760px;
+}
+
+.row {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+#chatMessages {
+    height: 500px;
+    border: 1px #e9e9e9 solid;
+    width: 45%;
+    margin: 30px auto 0;
+    overflow-y: scroll;
+}
+
+.icons-credit {
+    position: absolute;
+    width: 300px;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 10px;
+}
+
+
+/*
+*****************
+* CHAT MESSAGES *
+*****************
+*/
 
 .messages {
-	background-color: #eee;
-	height: 250px;
-	width: 250px;
+    padding: 10px 10px 0;
+}
+
+.userMessage {
+    width: 40%;
+    padding: 40px 10px 15px;
+    margin: 20px 25px 0 0;
+    float: right;
+    clear: both;
+    text-align: center;
+    background-color: #d8ebff;
+    font-family: Open Sans;
+    font-size: 16px;
+    font-weight: 400;
+    color: #3299CC;
+    border-top-left-radius: 1.8em;
+    border-top-right-radius: 1.8em;
+}
+
+.strangerMessage {
+    width: 40%;
+    padding: 40px 10px 15px;
+    margin: 20px 0 0 25px;
+    float: left;
+    clear: both;
+    text-align: center;
+    background-color: #ffebeb;
+    font-family: Open Sans;
+    font-size: 16px;
+    font-weight: 400;
+    color: #ED4337;
+    border-top-left-radius: 1.8em;
+    border-top-right-radius: 1.8em;
+}
+
+.systemMessage {
+    color: grey;
+    clear: both;
+}
+
+.systemMessage:last-child {
+    margin-bottom: 15px;
+}
+
+.bubbleBottom-user {
+    width: 40%;
+    height: 60px;
+    margin: 0 25px 20px 0;
+    background: url('/images/userBubbleBottom.svg');
+    background-size: 100%;
+    float: right;
+    clear: both;
+}
+
+.bubbleBottom-stranger {
+    width: 40%;
+    height: 60px;
+    margin: 0 0 20px 25px;
+    background: url('/images/strangerBubbleBottom.svg');
+    background-size: 100%;
+    float: left;
+    clear: both;
+}
+
+
+/*
+*****************
+* MESSAGE INPUT *
+*****************
+*/
+
+.inputSection {
+    margin-top: 40px;
+}
+
+#inputMessage {
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+    padding-left: 10px;
+}
+
+.col-sm-4 {
+    text-align: center;
+    height: 200px;
+}
+
+.btn {
+    width: 120px;
+    margin: 20px 5px 0;
+}
+
+
+/*
+***********
+* AVATARS *
+***********
+*/
+
+.avatar {
+    margin-top: -180px;
+    margin-right: 50px;
+}
+
+.meowth,
+.psyduck {
+    display: inline-block;
+    height: 175px;
+    width: 175px;
+}
+
+.meowth {
+    margin-right: -65px;
+    margin-top: -60px;
+}
+
+.psyduck {
+    margin-top: -65px;
+}
+
+
+/*
+*****************
+* DISPLAY NAMES *
+*****************
+*/
+
+.username {
+    padding-top: 20px;
+    font-weight: bold;
+}
+
+.user {
+    margin-right: 50px;
+}
+
+.stranger {
+    margin-left: 15px;
+}
+
+
+/*
+***********************
+* ON TYPING ANIMATION *
+***********************
+*/
+
+.quoteBubble {
+    display: inline-block;
+    height: 60px;
+    width: 60px;
+}
+
+.quoteBubble-right {
+    background: url('/images/speech-bubble-right.svg');
+    background-size: 98% 98%;
+    background-repeat: no-repeat;
+    margin-left: -160px;
+    visibility: hidden;
+}
+
+.quoteBubble-left {
+    background: url('/images/speech-bubble-left.svg');
+    background-size: 98% 98%;
+    background-repeat: no-repeat;
+    margin-right: -220px;
+    visibility: hidden;
+}
+
+.ellipsis {
+    height: 22.508px;
+    width: 40px;
+    margin-top: 18px;
+}
+
+
+/*
+**************
+* LOGIN PAGE *
+**************
+*/
+
+.loginPage {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #07A0C3;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding-top: 0;
+    text-align: center;
+    color: #fff;
+    /*visibility: hidden;*/
+}
+
+.loginPage h1 {
+    font-size: 80px;
+    font-family: 'Pacifico', cursive;
+    margin-top: 300px;
+}
+
+.loginPage p {
+    font-size: 26px;
+    font-family: 'Baloo Bhai';
+    margin-top: 40px;
+}
+
+.loginName {
+    width: 400px;
+    margin-top: 30px;
+    outline: none;
+    height: 40px;
+    font-size: 20px;
+    text-align: center;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px #fff solid;
+    border-bottom-style: dashed;
+}
+
+.errorMessage {
+    color: #f53d3d;
+}
+
+
+/*
+**********************
+* WINDOW SIZE CHANGE *
+**********************
+*/
+
+@media (max-width: 1000px) {
+    .btn {
+        width: 100px;
+        margin: 10px 5px 0;
+    }
+    .userMessage {
+        width: 40%;
+        padding: 25px 10px 15px;
+        margin: 10px 25px 0 0;
+        border-top-left-radius: 1em;
+        border-top-right-radius: 1em;
+    }
+    .strangerMessage {
+        width: 40%;
+        padding: 25px 10px 15px;
+        margin: 10px 0 0 25px;
+        border-top-left-radius: 1em;
+        border-top-right-radius: 1em;
+    }
+    .bubbleBottom-user {
+        width: 40%;
+        height: 40px;
+        margin: 0 25px 10px 0;
+    }
+    .bubbleBottom-stranger {
+        width: 40%;
+        height: 40px;
+        margin: 0 0 10px 25px;
+    }
+    .stranger {
+        margin-left: -5px;
+    }
+    .meowth {
+        margin-left: -5px;
+    }
+    .user {
+        margin-left: 5px;
+    }
+    .psyduck {
+        margin-left: 5px;
+    }
+}
+
+
+/*
+**************
+* ANIMATIONS *
+**************
+*/
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-950px);
+        visibility: hidden;
+    }
 }

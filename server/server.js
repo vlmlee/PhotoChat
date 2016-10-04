@@ -4,6 +4,7 @@ const http = require('http'),
     mime = require('mime');
 
 var cache = {};
+var socketServer = require('./socketServer');
 
 // Routes root url to '/public/index.html' and sends 404 error to all HTTP requests that have no endpoint.
 
@@ -16,7 +17,7 @@ var staticServer = {
         });
     },
     sendFile: function(response, filePath, fileContents) {
-        response.writeHead(200, { "content-type": mime.lookup(path.basename(filePath)) });
+        response.writeHead(200, { 'Content-Type': mime.lookup(path.basename(filePath)) });
         response.end(fileContents);
     },
     sendStatic: function(response, cache, absPath) {
@@ -56,3 +57,6 @@ var server = http.createServer((request, response) => {
 server.listen(3000, () => {
     console.log('Listening...');
 });
+
+// socketServer will piggyback on our main HTTP server
+socketServer.listen(server);
