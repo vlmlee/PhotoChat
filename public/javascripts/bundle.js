@@ -109,6 +109,7 @@ canvas.onmousemove = function(e) {
 function drawLoop(user) {
     if (mouse.click && mouse.move && mouse.posPrevious) {
         socket.emit('draw', {
+            name: name,
             line: [mouse.pos , mouse.posPrevious]
         });
         mouse.move = false;
@@ -178,13 +179,20 @@ socket.on('stranger message', (stranger) => {
 });
 
 socket.on('stranger draw', (data) => {
+    if (data.name === name) {
+        context.strokeStyle = '#3299CC';
+    } else {
+        context.strokeStyle = '#ED4337';
+    }
+
     var line = data.line;
     context.beginPath();
-    context.strokeStyle="#444444";
-    context.lineWidth = 2;
+    context.lineWidth = 3;
+    context.lineJoin = context.lineCap = 'round';
     console.log(line[0].x,line[0].y,line[1].x,line[1].y)
-    context.moveTo(line[0].x * width, line[0].y * height);
-    context.lineTo(line[1].x * width, line[1].y * height);
+    console.log(line[0].x * width, line[0].y * height, line[1].x * width, line[1].y * height)
+    context.moveTo(line[0].x * width - .28 * width, line[0].y * height - 100);
+    context.lineTo(line[1].x * width - .28 * width, line[1].y * height - 100);
     context.stroke();
 });
 

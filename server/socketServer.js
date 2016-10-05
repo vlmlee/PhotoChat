@@ -44,7 +44,6 @@ exports.listen = function(server) {
         });
 
         socket.on('draw', (data) => {
-            console.log(data);
             io.to(socket.room).emit('stranger draw', data);
         });
 
