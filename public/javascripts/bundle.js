@@ -76,6 +76,8 @@ var mouse = {
 
 var width = window.innerWidth;
 var height = window.innerHeight;
+var offsetX = .28 * width;
+var offsetY = 100;
 
 canvas.setAttribute('width', 730);
 canvas.setAttribute('height', 500);
@@ -101,8 +103,8 @@ canvas.onmouseup = function(e) {
 }
 
 canvas.onmousemove = function(e) {
-    mouse.pos.x = (e.clientX / width);
-    mouse.pos.y = (e.clientY / height);
+    mouse.pos.x = e.clientX;
+    mouse.pos.y = e.clientY;
     mouse.move = true;
 }
 
@@ -119,9 +121,18 @@ function drawLoop(user) {
     if (canvas) {
         setTimeout(() => {
             drawLoop();
-        }, 50);
+        }, 25);
     }
 }
+
+function midpoint(p1, p2) {
+    return {
+        x: p1.x + (p2.x - p1.x) / 2,
+        y: p1.y + (p2.y - p1.y) / 2
+    };
+}
+
+// window.addEventListener('resize', resizeWindow);
 
 /*
  * =======================================
@@ -178,7 +189,7 @@ socket.on('stranger message', (stranger) => {
     addChatMessage(stranger);
 });
 
-socket.on('stranger draw', (data) => {
+socket.on('draw on canvas', (data) => {
     if (data.name === name) {
         context.strokeStyle = '#3299CC';
     } else {
@@ -186,16 +197,22 @@ socket.on('stranger draw', (data) => {
     }
 
     var line = data.line;
+    var x1 = line[0].x - offsetX;
+    var y1 = line[0].y - offsetY;
+    var x2 = line[1].x - offsetX;
+    var y2 = line[1].y - offsetY;
+    var mp = midpoint(line[0], line[1]);
+
     context.beginPath();
     context.lineWidth = 3;
     context.lineJoin = context.lineCap = 'round';
-    context.moveTo(line[0].x * width - .28 * width, line[0].y * height - 100);
-    context.lineTo(line[1].x * width - .28 * width, line[1].y * height - 100);
+    context.moveTo(x1, y1);
+    context.quadraticCurveTo(mp.x - offsetX, mp.y - offsetY, x2, y2);
     context.stroke();
 });
 
 socket.on('clear canvas', () => {
-    context.canvas.width = context.canvas.width;
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height)
     $inputMessage.val('');
 });
 

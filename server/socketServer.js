@@ -44,7 +44,7 @@ exports.listen = function(server) {
         });
 
         socket.on('draw', (data) => {
-            io.to(socket.room).emit('stranger draw', data);
+            io.to(socket.room).emit('draw on canvas', data);
         });
 
         socket.on('clear canvas', () => {

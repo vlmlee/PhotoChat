@@ -73,6 +73,11 @@ button:active {
 .chatBody {
     height: 100%;
     display: none;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
 }
 
 .container-fluid {
@@ -215,11 +220,6 @@ button:active {
     width: 100%;
     height: 40px;
     padding-left: 10px;
-    user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -o-user-select: none;
 }
 
 .col-sm-4 {
@@ -230,11 +230,6 @@ button:active {
 .btn {
     width: 120px;
     margin: 20px 5px 0;
-    user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -o-user-select: none;
 }
 
 
@@ -264,13 +259,7 @@ button:active {
 */
 
 .avatar {
-    margin-top: -180px;
-    margin-right: 50px;
-    user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -o-user-select: none;
+    margin: -180px 100px 0 100px;
 }
 
 .meowth,
@@ -281,12 +270,11 @@ button:active {
 }
 
 .meowth {
-    margin-right: -65px;
-    margin-top: -60px;
+    margin: -60px -65px 0 0;
 }
 
 .psyduck {
-    margin-top: -65px;
+    margin: -65px 0 0 -65px;
 }
 
 
@@ -302,11 +290,11 @@ button:active {
 }
 
 .user {
-    margin-right: 50px;
+    margin-right: 65px;
 }
 
 .stranger {
-    margin-left: 15px;
+    margin-left: 60px;
 }
 
 
