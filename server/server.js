@@ -54,7 +54,7 @@ var server = http.createServer((request, response) => {
     staticServer.sendStatic(response, cache, absPath);
 });
 
-server.listen(3005, () => {
+server.listen(3000, () => {
     console.log('Listening...');
 });
 

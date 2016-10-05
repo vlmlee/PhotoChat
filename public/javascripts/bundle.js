@@ -110,7 +110,7 @@ function drawLoop(user) {
     if (mouse.click && mouse.move && mouse.posPrevious) {
         socket.emit('draw', {
             name: name,
-            line: [mouse.pos , mouse.posPrevious]
+            line: [mouse.pos, mouse.posPrevious]
         });
         mouse.move = false;
     }
@@ -189,11 +189,14 @@ socket.on('stranger draw', (data) => {
     context.beginPath();
     context.lineWidth = 3;
     context.lineJoin = context.lineCap = 'round';
-    console.log(line[0].x,line[0].y,line[1].x,line[1].y)
-    console.log(line[0].x * width, line[0].y * height, line[1].x * width, line[1].y * height)
     context.moveTo(line[0].x * width - .28 * width, line[0].y * height - 100);
     context.lineTo(line[1].x * width - .28 * width, line[1].y * height - 100);
     context.stroke();
+});
+
+socket.on('clear canvas', () => {
+    context.canvas.width = context.canvas.width;
+    $inputMessage.val('');
 });
 
 /* 
@@ -241,7 +244,9 @@ $window.keydown((event) => {
                 sendTextMessage();
             } else if (pictureChat) {
                 sendPictureMessage();
-            } 
+            } else if (canvas && ($inputMessage.val() === 'clear')) {
+                socket.emit('clear canvas');
+            }
         } else {
             setName();
         }
@@ -295,8 +300,6 @@ $textChatButton.on('click', (e) => {
     $inputMessage.css({
         'text-align': 'left'
     }).attr('placeholder', 'Send message...');
-
-
 });
 
 $pictureChatButton.on('click', (e) => {
@@ -321,6 +324,10 @@ $canvasChatButton.on('click', (e) => {
         display: 'block'
     });
     drawLoop();
+
+    $inputMessage.css({
+        'text-align': 'center'
+    }).attr('placeholder', "Type 'clear' to clear the canvas");
 });
 
 /*

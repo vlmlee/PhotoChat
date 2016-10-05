@@ -97,7 +97,7 @@ function drawLoop(user) {
     if (mouse.click && mouse.move && mouse.posPrevious) {
         socket.emit('draw', {
             name: name,
-            line: [mouse.pos , mouse.posPrevious]
+            line: [mouse.pos, mouse.posPrevious]
         });
         mouse.move = false;
     }
@@ -181,6 +181,11 @@ socket.on('stranger draw', (data) => {
     context.stroke();
 });
 
+socket.on('clear canvas', () => {
+    context.canvas.width = context.canvas.width;
+    $inputMessage.val('');
+});
+
 /* 
  * =======================================
  *                SET NAME
@@ -226,7 +231,9 @@ $window.keydown((event) => {
                 sendTextMessage();
             } else if (pictureChat) {
                 sendPictureMessage();
-            } 
+            } else if (canvas && ($inputMessage.val() === 'clear')) {
+                socket.emit('clear canvas');
+            }
         } else {
             setName();
         }
@@ -280,8 +287,6 @@ $textChatButton.on('click', (e) => {
     $inputMessage.css({
         'text-align': 'left'
     }).attr('placeholder', 'Send message...');
-
-
 });
 
 $pictureChatButton.on('click', (e) => {
@@ -306,6 +311,10 @@ $canvasChatButton.on('click', (e) => {
         display: 'block'
     });
     drawLoop();
+
+    $inputMessage.css({
+        'text-align': 'center'
+    }).attr('placeholder', "Type 'clear' to clear the canvas");
 });
 
 /*

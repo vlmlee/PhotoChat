@@ -47,6 +47,10 @@ exports.listen = function(server) {
             io.to(socket.room).emit('stranger draw', data);
         });
 
+        socket.on('clear canvas', () => {
+            io.to(socket.room).emit('clear canvas');
+        });
+
         socket.on('typing', () => {
             socket.broadcast.to(socket.room).emit('stranger typing');
         });
