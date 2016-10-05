@@ -33,6 +33,7 @@ var $loginName = $('#loginName'),
     $loginPage = $('#loginPage'),
     $errorMessage = $('.errorMessage'),
     $chatError = $('#chatError'),
+    $canvasError = $('#canvasError'),
     $chatBody = $('#chatBody'),
     $chatMessages = $('#chatMessages'),
     $inputMessage = $('#inputMessage'),
@@ -44,6 +45,69 @@ var $loginName = $('#loginName'),
     $bubbleRight = $('#quoteBubble-right'),
     $bubbleLeft = $('#quoteBubble-left'),
     $window = $(window);
+
+// canvas
+var canvas = document.getElementById('drawingBody'),
+    $drawingBody = $('#drawingBody'),
+    context;
+
+var mouse = {
+    click: false,
+    move: false,
+    pos: {
+        x: 0,
+        y: 0
+    },
+    posPrevious: false
+};
+
+var width = window.innerWidth;
+var height = window.innerHeight;
+
+canvas.setAttribute('width', 730);
+canvas.setAttribute('height', 500);
+
+/*
+ * =======================================
+ *                 CANVAS
+ * =======================================
+ */
+
+if (canvas.getContext('2d')) {
+    context = canvas.getContext('2d');
+} else {
+    $canvasError.html('Canvas is not supported on this browser.');
+}
+
+canvas.onmousedown = function(e) {
+    mouse.click = true;
+}
+
+canvas.onmouseup = function(e) {
+    mouse.click = false;
+}
+
+canvas.onmousemove = function(e) {
+    mouse.pos.x = (e.clientX / width);
+    mouse.pos.y = (e.clientY / height);
+    mouse.move = true;
+}
+
+function drawLoop(user) {
+    if (mouse.click && mouse.move && mouse.posPrevious) {
+        socket.emit('draw', {
+            line: [mouse.pos , mouse.posPrevious]
+        });
+        mouse.move = false;
+    }
+    mouse.posPrevious = { x: mouse.pos.x, y: mouse.pos.y };
+
+    if (canvas) {
+        setTimeout(() => {
+            drawLoop();
+        }, 50);
+    }
+}
 
 /*
  * =======================================
@@ -100,6 +164,17 @@ socket.on('stranger message', (stranger) => {
     addChatMessage(stranger);
 });
 
+socket.on('stranger draw', (data) => {
+    var line = data.line;
+    context.beginPath();
+    context.strokeStyle="#444444";
+    context.lineWidth = 2;
+    console.log(line[0].x,line[0].y,line[1].x,line[1].y)
+    context.moveTo(line[0].x * width, line[0].y * height);
+    context.lineTo(line[1].x * width, line[1].y * height);
+    context.stroke();
+});
+
 /* 
  * =======================================
  *                SET NAME
@@ -117,7 +192,7 @@ function setName() {
         $chatBody.show();
         socket.emit('connect to chat', name);
     } else {
-        $errorMessage.html('Error: please choose a different name.');
+        $errorMessage.html('Please choose a different name.');
         name = '';
     }
 }
@@ -136,6 +211,7 @@ $window.keydown((event) => {
     // Any key press will autofocus on the login field
     if (!(event.ctrlKey || event.metaKey || event.altKey)) {
         $loginName.focus();
+        $inputMessage.focus();
     }
     // event.which === 13 is the "enter key" event.
     if (event.which === 13) {
@@ -144,9 +220,7 @@ $window.keydown((event) => {
                 sendTextMessage();
             } else if (pictureChat) {
                 sendPictureMessage();
-            } else {
-                canvas;
-            }
+            } 
         } else {
             setName();
         }
@@ -159,13 +233,13 @@ $window.keydown((event) => {
  * =======================================
  */
 
-function cleanInput(inputVal, message) {
-    if (message) {
+function cleanInput(inputVal, text) {
+    if (text) {
         return $('<div />').text(inputVal).text();
     }
 
     if (inputVal.match(badWordsRegex) || containsBadWord(inputVal)) {
-        $chatError.html("Error: please don't use bad words!");
+        $chatError.html("Please don't use bad words!");
         return '';
     } else {
         $chatError.html('');
@@ -195,9 +269,13 @@ $textChatButton.on('click', (e) => {
     textChat = true,
         pictureChat = false,
         canvas = false;
+    $drawingBody.hide();
+    $chatMessages.show();
     $inputMessage.css({
         'text-align': 'left'
     }).attr('placeholder', 'Send message...');
+
+
 });
 
 $pictureChatButton.on('click', (e) => {
@@ -205,6 +283,8 @@ $pictureChatButton.on('click', (e) => {
     textChat = false,
         pictureChat = true,
         canvas = false;
+    $drawingBody.hide();
+    $chatMessages.show();
     $inputMessage.css({
         'text-align': 'center'
     }).attr('placeholder', 'Type in a single word...');
@@ -215,6 +295,11 @@ $canvasChatButton.on('click', (e) => {
     textChat = false,
         pictureChat = false,
         canvas = true;
+    $chatMessages.hide();
+    $drawingBody.css({
+        display: 'block'
+    });
+    drawLoop();
 });
 
 /*

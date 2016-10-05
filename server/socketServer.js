@@ -43,6 +43,11 @@ exports.listen = function(server) {
             });
         });
 
+        socket.on('draw', (data) => {
+            console.log(data);
+            io.to(socket.room).emit('stranger draw', data);
+        });
+
         socket.on('typing', () => {
             socket.broadcast.to(socket.room).emit('stranger typing');
         });

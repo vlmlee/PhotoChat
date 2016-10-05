@@ -181,16 +181,24 @@ button:active {
     clear: both;
 }
 
-.chatError {
+.error {
     position: absolute;
     color: #f53d3d;
-    bottom: 120px;
     left: 0;
     right: 0;
     margin: 0 auto;
     text-align: center;
     width: 400px;
 }
+
+#chatError {
+    bottom: 120px;
+}
+
+#canvasError {
+    bottom: 100px;
+}
+
 
 /*
 *****************
@@ -217,6 +225,25 @@ button:active {
 .btn {
     width: 120px;
     margin: 20px 5px 0;
+}
+
+
+/*
+**********
+* CANVAS *
+**********
+*/
+
+#drawingBody {
+    display: none;
+    /*background: url('/images/draw.svg') no-repeat;*/
+    /*background-size: 60%;*/
+    background-position: center center;
+    height: 500px;
+    border: 1px #e9e9e9 solid;
+    width: 45%;
+    margin: 30px auto 0;
+    z-index: 9999;
 }
 
 
