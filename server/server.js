@@ -3,8 +3,8 @@ const http = require('http'),
     path = require('path'),
     mime = require('mime');
 
-var cache = {};
-var socketServer = require('./socketServer');
+var cache = {},
+    socketServer = require('./socketServer');
 
 // Routes root url to '/public/index.html' and sends 404 error to all HTTP requests that have no endpoint.
 

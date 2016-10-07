@@ -61,10 +61,8 @@ var mouse = {
     posPrevious: false
 };
 
-var width = window.innerWidth;
-var height = window.innerHeight;
-var offsetX = .28 * width;
-var offsetY = 100;
+var width = window.innerWidth,
+    height = window.innerHeight;
 
 canvas.setAttribute('width', 730);
 canvas.setAttribute('height', 500);
@@ -90,8 +88,8 @@ canvas.onmouseup = function(e) {
 }
 
 canvas.onmousemove = function(e) {
-    mouse.pos.x = e.clientX;
-    mouse.pos.y = e.clientY;
+    mouse.pos.x = e.clientX - this.offsetLeft;
+    mouse.pos.y = e.clientY - this.offsetTop;
     mouse.move = true;
 }
 
@@ -119,7 +117,11 @@ function midpoint(p1, p2) {
     };
 }
 
-// window.addEventListener('resize', resizeWindow);
+// window.addEventListener('resize', resizeCanvas);
+// function resizeCanvas() {
+//     width = window.innerHeight;
+//     height = window.innerHeight;
+//}
 
 /*
  * =======================================
@@ -184,17 +186,17 @@ socket.on('draw on canvas', (data) => {
     }
 
     var line = data.line;
-    var x1 = line[0].x - offsetX;
-    var y1 = line[0].y - offsetY;
-    var x2 = line[1].x - offsetX;
-    var y2 = line[1].y - offsetY;
+    var x1 = line[0].x;
+    var y1 = line[0].y;
+    var x2 = line[1].x;
+    var y2 = line[1].y;
     var mp = midpoint(line[0], line[1]);
 
     context.beginPath();
     context.lineWidth = 3;
     context.lineJoin = context.lineCap = 'round';
     context.moveTo(x1, y1);
-    context.quadraticCurveTo(mp.x - offsetX, mp.y - offsetY, x2, y2);
+    context.quadraticCurveTo(mp.x, mp.y, x2, y2);
     context.stroke();
 });
 
@@ -265,9 +267,9 @@ $window.keydown((event) => {
 
 function cleanInput(inputVal, text) {
     if (text) {
+        $chatError.html('');
         return $('<div />').text(inputVal).text();
     }
-
     if (inputVal.match(badWordsRegex) || containsBadWord(inputVal)) {
         $chatError.html("Please don't use bad words!");
         return '';
@@ -328,10 +330,9 @@ $canvasChatButton.on('click', (e) => {
         display: 'block'
     });
     drawLoop();
-
     $inputMessage.css({
         'text-align': 'center'
-    }).attr('placeholder', "Type 'clear' to clear the canvas");
+    }).attr('placeholder', "Type 'clear' to clear the canvas...");
 });
 
 /*

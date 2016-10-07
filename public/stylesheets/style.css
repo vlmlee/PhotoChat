@@ -241,13 +241,14 @@ button:active {
 
 #drawingBody {
     display: none;
+    height: 500px;
+    width: 45%;
+    min-width: 720px;
     background: url('/images/draw.svg') no-repeat;
     background-size: 60%;
     background-position: center center;
-    height: 500px;
-    border: 1px #e9e9e9 solid;
-    min-width: 720px;
     margin: 30px auto 0;
+    border: 1px #e9e9e9 solid;
     z-index: 9;
 }
 
