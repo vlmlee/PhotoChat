@@ -136,7 +136,6 @@ function midpoint(p1, p2) {
 
 socket.on('user joined', (user) => {
     $chatMessages.append('<div class="messages systemMessage">' + user.name + ' has joined the room.</div>');
-
     // If a user joins an already occupied room,
     // we will retrieve the name of the other
     // participant and set it.
@@ -215,7 +214,7 @@ function setName() {
     name = cleanInput($loginName.val().trim());
     if (name) {
         $loginPage.css({
-            'animation': 'slideUp 1.5s ease forwards'
+            'animation': 'fadeOut 1.5s ease forwards'
         });
         // The chat body is initially hidden to (soft) protect access 
         // without a name.

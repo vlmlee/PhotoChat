@@ -1,9 +1,10 @@
-var io = require('socket.io')(),
-    userCount = 0,
-    rooms = {},
-    users = [];
+var io = require('socket.io')();
 
 exports.listen = function(server) {
+    var userCount = 0,
+        rooms = {},
+        users = [];
+
     io = io.listen(server);
 
     io.on('connection', (socket) => {

@@ -228,7 +228,7 @@ function setName() {
     name = cleanInput($loginName.val().trim());
     if (name) {
         $loginPage.css({
-            'animation': 'slideUp 1.5s ease forwards'
+            'animation': 'fadeOut 1.5s ease forwards'
         });
         // The chat body is initially hidden to (soft) protect access 
         // without a name.

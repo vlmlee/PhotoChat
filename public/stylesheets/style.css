@@ -323,7 +323,7 @@ button:active {
     background: url('/images/speech-bubble-left.svg');
     background-size: 98% 98%;
     background-repeat: no-repeat;
-    margin-right: -220px;
+    margin-right: -140px;
     visibility: hidden;
 }
 
@@ -425,13 +425,17 @@ button:active {
         margin-left: -5px;
     }
     .meowth {
-        margin-left: -5px;
+        margin-left: -50px;
+        height: 100px;
+        width: 100px;
     }
     .user {
         margin-left: 5px;
     }
     .psyduck {
-        margin-left: 5px;
+        margin-left: -50px;
+        height: 100px;
+        width: 100px;
     }
 }
 
@@ -448,6 +452,16 @@ button:active {
     }
     100% {
         opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
     }
 }
 
